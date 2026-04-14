@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="h4 mb-0">Department Details</h2>
+  <button class="btn btn-outline-secondary" type="button" (click)="onBackToDepartments()">Back to Departments</button>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="loading" class="text-center py-4">
+  <div class="spinner-border" role="status" aria-hidden="true"></div>
+</div>
+
+<div *ngIf="!loading && department" class="card mb-3">
+  <div class="card-body">
+    <p class="mb-1"><strong>ID:</strong> {{ department.deptId }}</p>
+    <p class="mb-1"><strong>Name:</strong> {{ department.deptName }}</p>
+    <p class="mb-1"><strong>Description:</strong> {{ department.deptDesc }}</p>
+    <p class="mb-1"><strong>Location:</strong> {{ department.deptLocation }}</p>
+    <p class="mb-0"><strong>Student Count:</strong> {{ department.studentCount }}</p>
+  </div>
+</div>
+
+<div *ngIf="!loading && department" class="row g-3">
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h3 class="h6">Available Courses</h3>
+        <div *ngIf="availableCourses.length === 0" class="text-muted">No available courses to add.</div>
+        <div *ngFor="let course of availableCourses" class="form-check">
+          <input class="form-check-input" type="checkbox" [id]="'add-' + course.courseId"
+            [checked]="selectedToAdd.includes(course.courseId)"
+            (change)="onAddCourseToggle(course.courseId, $any($event.target).checked)" />
+          <label class="form-check-label" [for]="'add-' + course.courseId">
+            {{ course.courseName }}
+          </label>
+        </div>
+        <button class="btn btn-primary mt-3" type="button" (click)="addSelectedCourses()"
+          [disabled]="actionLoading || selectedToAdd.length === 0">
+          <span *ngIf="actionLoading" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          Add Selected Courses
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h3 class="h6">Assigned Courses</h3>
+        <div *ngIf="assignedCourses.length === 0" class="text-muted">No courses assigned.</div>
+        <div *ngFor="let course of assignedCourses" class="form-check">
+          <input class="form-check-input" type="checkbox" [id]="'remove-' + course.courseId"
+            [checked]="selectedToRemove.includes(course.courseId)"
+            (change)="onRemoveCourseToggle(course.courseId, $any($event.target).checked)" />
+          <label class="form-check-label" [for]="'remove-' + course.courseId">
+            {{ course.courseName }}
+          </label>
+        </div>
+        <button class="btn btn-danger mt-3" type="button" (click)="removeSelectedCourses()"
+          [disabled]="actionLoading || selectedToRemove.length === 0">
+          <span *ngIf="actionLoading" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          Remove Selected Courses
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

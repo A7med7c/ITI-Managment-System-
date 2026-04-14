@@ -1,0 +1,79 @@
+<h2 class="h4 mb-3">Assign Degree</h2>
+<p class="text-muted">Select student, course, department, then enter degree.</p>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label for="studentId" class="form-label">Student</label>
+          <select id="studentId" class="form-select" formControlName="studentId">
+            <option [ngValue]="null">Select student</option>
+            <option *ngFor="let student of students" [ngValue]="student.stId">
+              {{ student.fullName }}
+            </option>
+          </select>
+          <div class="text-danger small mt-1"
+            *ngIf="form.controls.studentId.touched && form.controls.studentId.hasError('required')">
+            Student is required.
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="courseId" class="form-label">Course</label>
+          <select id="courseId" class="form-select" formControlName="courseId">
+            <option [ngValue]="null">Select course</option>
+            <option *ngFor="let course of courses" [ngValue]="course.courseId">
+              {{ course.courseName }}
+            </option>
+          </select>
+          <div class="text-danger small mt-1"
+            *ngIf="form.controls.courseId.touched && form.controls.courseId.hasError('required')">
+            Course is required.
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="departmentId" class="form-label">Department</label>
+          <select id="departmentId" class="form-select" formControlName="departmentId">
+            <option [ngValue]="null">Select department</option>
+            <option *ngFor="let department of departments" [ngValue]="department.deptId">
+              {{ department.deptName }}
+            </option>
+          </select>
+          <div class="text-danger small mt-1"
+            *ngIf="form.controls.departmentId.touched && form.controls.departmentId.hasError('required')">
+            Department is required.
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="degree" class="form-label">Degree</label>
+          <input id="degree" type="number" class="form-control" formControlName="degree" min="0" max="100"
+            placeholder="Enter degree" />
+          <div class="text-danger small mt-1"
+            *ngIf="form.controls.degree.touched && form.controls.degree.hasError('required')">
+            Degree is required.
+          </div>
+          <div class="text-danger small mt-1"
+            *ngIf="form.controls.degree.touched && (form.controls.degree.hasError('min') || form.controls.degree.hasError('max'))">
+            Degree must be between 0 and 100.
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-4" type="submit" [disabled]="submitting">
+        <span *ngIf="submitting" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+        Assign Degree
+      </button>
+    </form>
+  </div>
+</div>
