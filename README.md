@@ -1,59 +1,70 @@
-# ItiAngular
+# ITI Management System (Angular Client)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Single-page Angular application for managing ITI students, departments, courses, and enrollments. The app integrates with a JWT-protected backend API and uses standalone components with an HTTP interceptor.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Authentication**: Login and registration via `/api/accounts/*`, JWT stored in `localStorage`, and automatic redirect to `/login` on 401 responses.
+- **Students**: List with pagination/search, create, edit, and delete students.
+- **Departments**: List departments, view department details, and assign/remove courses.
+- **Courses**: List courses, create, edit, and delete courses.
+- **Enrollment**: Assign a degree to a student for a course within a department.
+- **UI**: Bootstrap 5 via CDN.
 
-```bash
-ng serve
+## Routes
+
+Public:
+- `/login`
+- `/register`
+- `/students` (list)
+
+Protected by auth guard:
+- `/students/new`
+- `/students/edit/:id`
+- `/students/:id/edit`
+- `/departments`
+- `/departments/:id`
+- `/courses`
+- `/courses/new`
+- `/courses/:id/edit`
+- `/enrollment`
+
+Fallback:
+- `**` → `/not-found`
+
+## API Configuration
+
+The API base URL is configured in `src/environments/environment.ts` and `src/environments/environment.development.ts`:
+
+```
+https://localhost:7174/api
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Update these files to match your backend host and port. Detailed backend endpoints are documented in `src/ApiDocumentation.md`.
 
-## Code scaffolding
+## Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Prerequisites
+- Node.js and npm
+- Backend API running and reachable from the browser
 
+### Install
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### Development server
 ```bash
-ng generate --help
+npm start
+```
+Open `http://localhost:4200/`.
+
+### Build
+```bash
+npm run build
 ```
 
-## Building
-
-To build the project run:
-
+### Tests
 ```bash
-ng build
+npm run test
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
