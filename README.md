@@ -36,7 +36,7 @@ Fallback:
 
 The API base URL is configured in `src/environments/environment.ts` and `src/environments/environment.development.ts`:
 
-```
+```text
 https://localhost:7174/api
 ```
 
